@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Login - Tarea 4</title>
+</head>
+<body>
+  <h1>Iniciar sesion</h1>
+
+  {% if error %}
+    <p id="error-login" style="color:red;">{{ error }}</p>
+  {% endif %}
+
+  <form method="POST" action="/login">
+    <label for="usuario">Usuario</label>
+    <input type="text" id="usuario" name="usuario">
+    <br>
+    <label for="clave">Clave</label>
+    <input type="password" id="clave" name="clave">
+    <br>
+    <button type="submit" id="btn-login">Entrar</button>
+  </form>
+</body>
+</html>

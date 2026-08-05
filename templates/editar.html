@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Editar tarea</title>
+</head>
+<body>
+  <h1>Editar tarea</h1>
+  <form method="POST" action="/tareas/{{ tarea.id }}/editar">
+    <input type="text" id="titulo" name="titulo" value="{{ tarea.titulo }}">
+    <button type="submit" id="btn-guardar">Guardar</button>
+  </form>
+</body>
+</html>

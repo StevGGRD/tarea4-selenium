@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Tareas - Tarea 4</title>
+</head>
+<body>
+  <h1>Mis tareas</h1>
+  <a href="/logout">cerrar sesion</a>
+
+  {% if error %}
+    <p id="error-tarea" style="color:red;">{{ error }}</p>
+  {% endif %}
+
+  <form method="POST" action="/tareas">
+    <label for="titulo">Nueva tarea</label>
+    <input type="text" id="titulo" name="titulo">
+    <button type="submit" id="btn-crear">Agregar</button>
+  </form>
+
+  <ul id="lista-tareas">
+    {% for tarea in tareas %}
+      <li id="tarea-{{ tarea.id }}">
+        {{ tarea.titulo }}
+        <a href="/tareas/{{ tarea.id }}/editar">editar</a>
+        <form method="POST" action="/tareas/{{ tarea.id }}/eliminar" style="display:inline;">
+          <button type="submit">eliminar</button>
+        </form>
+      </li>
+    {% endfor %}
+  </ul>
+
+  {% if tareas|length == 0 %}
+    <p id="lista-vacia">no hay tareas todavia</p>
+  {% endif %}
+</body>
+</html>
