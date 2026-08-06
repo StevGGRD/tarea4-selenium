@@ -2,6 +2,7 @@ import pytest
 import requests
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.support.ui import WebDriverWait
 import os
 
 URL_BASE = "http://localhost:5000"
@@ -31,6 +32,8 @@ def loguearse(driver):
     driver.find_element("id", "usuario").send_keys("admin")
     driver.find_element("id", "clave").send_keys("1234")
     driver.find_element("id", "btn-login").click()
+    # espero a que la redireccion a /tareas termine antes de seguir
+    WebDriverWait(driver, 5).until(lambda d: "/tareas" in d.current_url)
 
 
 # esto toma una captura de pantalla automatica de cada prueba y la mete en el reporte html

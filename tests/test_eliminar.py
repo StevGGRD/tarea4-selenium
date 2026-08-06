@@ -1,4 +1,5 @@
 from selenium.webdriver.common.by import By
+import requests
 from conftest import URL_BASE, loguearse
 
 
@@ -15,9 +16,11 @@ def test_eliminar_camino_feliz(driver):
 
 def test_eliminar_negativo_id_inexistente(driver):
     loguearse(driver)
-    driver.get(f"{URL_BASE}/tareas/9999/eliminar")
-    # el metodo GET no esta permitido en esa ruta (solo POST), debe fallar
-    assert "405" in driver.page_source or driver.current_url.endswith("/9999/eliminar")
+    # este endpoint solo acepta POST, probamos con GET directo (sin pasar por el navegador)
+    # usando las cookies de la sesion ya logueada, para revisar el codigo de respuesta real
+    cookies = {c["name"]: c["value"] for c in driver.get_cookies()}
+    respuesta = requests.get(f"{URL_BASE}/tareas/9999/eliminar", cookies=cookies)
+    assert respuesta.status_code == 405
 
 
 def test_eliminar_limite_lista_vuelve_vacia(driver):
