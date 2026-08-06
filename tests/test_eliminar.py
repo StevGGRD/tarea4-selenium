@@ -1,4 +1,5 @@
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
 import requests
 from conftest import URL_BASE, loguearse
 
@@ -11,6 +12,7 @@ def test_eliminar_camino_feliz(driver):
     driver.find_element(By.ID, "btn-crear").click()
 
     driver.find_element(By.XPATH, "//button[text()='eliminar']").click()
+    WebDriverWait(driver, 5).until(lambda d: "tarea a borrar" not in d.page_source)
     assert "tarea a borrar" not in driver.page_source
 
 
@@ -29,4 +31,5 @@ def test_eliminar_limite_lista_vuelve_vacia(driver):
     driver.find_element(By.ID, "btn-crear").click()
     driver.find_element(By.XPATH, "//button[text()='eliminar']").click()
 
+    WebDriverWait(driver, 5).until(lambda d: "lista-vacia" in d.page_source)
     assert "lista-vacia" in driver.page_source
