@@ -91,5 +91,15 @@ def eliminar_tarea(id_tarea):
     return redirect("/tareas")
 
 
+@app.route("/test/reset", methods=["POST"])
+def test_reset():
+    # esta ruta la uso solo para que las pruebas de selenium empiecen
+    # siempre con la lista de tareas vacia, si no se van acumulando
+    global tareas, siguiente_id
+    tareas = []
+    siguiente_id = 1
+    return "ok"
+
+
 if __name__ == "__main__":
     app.run(debug=True, port=5000)

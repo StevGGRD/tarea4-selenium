@@ -1,9 +1,18 @@
 import pytest
+import requests
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 import os
 
 URL_BASE = "http://localhost:5000"
+
+
+@pytest.fixture(autouse=True)
+def resetear_datos():
+    # antes de cada prueba borro las tareas para que no queden
+    # datos pegados de la prueba anterior
+    requests.post(f"{URL_BASE}/test/reset")
+    yield
 
 
 @pytest.fixture
@@ -12,6 +21,7 @@ def driver():
     opciones.add_argument("--headless=new")
     opciones.add_argument("--window-size=1280,900")
     navegador = webdriver.Chrome(options=opciones)
+    navegador.implicitly_wait(5)  # espera hasta 5 seg si un elemento no aparece de una vez
     yield navegador
     navegador.quit()
 
